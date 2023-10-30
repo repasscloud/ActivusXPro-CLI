@@ -31,28 +31,22 @@ namespace ActivusXPro_CLI
             {
                 case "--search":
                     // check if there are additional args
-                    if (args.Length >= 2)
+                    if (args.Length == 4)
                     {
                         string additionalArg = args[1].ToLower();
+                        string searchADProperty = args[2].ToLower();
+                        string searchValue = args[3].ToLower();
+
                         switch (additionalArg)
                         {
-                            case "--user":
-                                if (args.Length >= 4)
-                                {
-                                    string searchADProperty = args[2];
-                                    string searchValue = args[3];
-                                    SearchAD.FindADUser(rootDN: domainPath, searchBy: searchADProperty, searchValue: searchValue);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("see help");
-                                }
-                                break;
                             case "/?":
                                 HelpMenu.SearchADUserHelp();
                                 break;
+                            case "--user":
+                                SearchAD.FindADUser(rootDN: domainPath, searchBy: searchADProperty, searchValue: searchValue);
+                                break;
                             default:
-                                Console.WriteLine("see help");
+                                HelpMenu.SearchADUserHelp();
                                 break;
                         }
                     }

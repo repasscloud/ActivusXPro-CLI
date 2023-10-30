@@ -69,26 +69,26 @@ namespace ActivusXPro_CLI.Core.Utilities
                         Country = result.Properties.Contains("co") ? result.Properties["co"][0].ToString() : null,
                     };
 
-                    Console.WriteLine($"SamAccountName: {user.SamAccountName}");
-                    Console.WriteLine($"UserPrincipalName: {user.UserPrincipalName ?? "N/A"}");
-                    Console.WriteLine($"GivenName: {user.GivenName ?? "N/A"}");
-                    Console.WriteLine($"Surname: {user.Surname ?? "N/A"}");
-                    Console.WriteLine($"DisplayName: {user.DisplayName ?? "N/A"}");
-                    Console.WriteLine($"Email: {user.Email ?? "N/A"}");
-                    Console.WriteLine($"EmployeeID: {user.EmployeeID ?? "N/A"}");
-                    Console.WriteLine($"Department: {user.Department ?? "N/A"}");
-                    Console.WriteLine($"Title: {user.Title ?? "N/A"}");
-                    Console.WriteLine($"PhoneNumber: {user.PhoneNumber ?? "N/A"}");
-                    Console.WriteLine($"AccountEnabled: {user.AccountEnabled}");
-                    Console.WriteLine($"PasswordNeverExpires: {user.PasswordNeverExpires}");
-                    Console.WriteLine($"Country: {user.Country}");
+                    Console.WriteLine($"  SamAccountName: {user.SamAccountName}");
+                    Console.WriteLine($"  UserPrincipalName: {user.UserPrincipalName ?? "N/A"}");
+                    Console.WriteLine($"  GivenName: {user.GivenName ?? "N/A"}");
+                    Console.WriteLine($"  Surname: {user.Surname ?? "N/A"}");
+                    Console.WriteLine($"  DisplayName: {user.DisplayName ?? "N/A"}");
+                    Console.WriteLine($"  Email: {user.Email ?? "N/A"}");
+                    Console.WriteLine($"  EmployeeID: {user.EmployeeID ?? "N/A"}");
+                    Console.WriteLine($"  Department: {user.Department ?? "N/A"}");
+                    Console.WriteLine($"  Title: {user.Title ?? "N/A"}");
+                    Console.WriteLine($"  PhoneNumber: {user.PhoneNumber ?? "N/A"}");
+                    Console.WriteLine($"  AccountEnabled: {user.AccountEnabled}");
+                    Console.WriteLine($"  PasswordNeverExpires: {user.PasswordNeverExpires}");
+                    Console.WriteLine($"  Country: {user.Country}");
 
                     if (user.ProxyAddresses != null && user.ProxyAddresses.Count > 0)
                     {
-                        Console.WriteLine("ProxyAddresses:");
+                        Console.WriteLine("  ProxyAddresses:");
                         foreach (string proxyAddress in user.ProxyAddresses)
                         {
-                            Console.WriteLine($"  - {proxyAddress}");
+                            Console.WriteLine($"    - {proxyAddress}");
                         }
                     }
                     else
