@@ -13,3 +13,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindAllDisabledADUsers(System.String)")]
 [assembly: SuppressMessage("Style", "IDE0063:Use simple 'using' statement", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindAllEnabledADUsers(System.String)")]
 [assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindAllEnabledADUsers(System.String)")]
+[assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindAllDisabledADUsers(System.String,System.String)")]

@@ -2,6 +2,7 @@
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
 using ActivusXPro_CLI.Core.Utilities;
+using OfficeOpenXml;
 
 namespace ActivusXPro_CLI
 {
@@ -14,6 +15,9 @@ namespace ActivusXPro_CLI
                 HelpMenu.MainHelp();
                 return;
             }
+
+            // EPPlus License
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             // get the current domain context
             Domain currentDomain = Domain.GetCurrentDomain();
@@ -58,6 +62,73 @@ namespace ActivusXPro_CLI
                 case "--new":
                     break;
                 case "--update":
+                    break;
+                case "--report":
+                    // actxpro.exe --report --class:<user|computer> --<disabled|enabled> [--file:<xlsx|csv>]
+                    if (args.Length == 4)
+                    {
+                        try
+                        {
+                            // assign all the raw args parsed
+                            string[] objectClassParts = args[1].ToLower().Split(':');
+                            string accountControl = args[2].ToLower();
+                            string[] exportFileTypeParts = args[3].Split(new char[] { ':' }, 2);
+
+                            // set the split results to empty strings
+                            string objectClass = string.Empty;
+                            string exportFilePath = string.Empty;
+
+                            // split the parts to the split results
+                            if (objectClassParts.Length == 2)
+                            {
+                                objectClass = objectClassParts[1];
+                            }
+                            else
+                            {
+                                //TODO: handle error here
+                            }
+                            if (exportFileTypeParts.Length == 2)
+                            {
+                                //string argumentName = exportFileTypeParts[0];
+                                exportFilePath = exportFileTypeParts[1];
+
+                                // Now, argumentName contains "--file" and argumentValue contains "C:\temp\export.xlsx"
+                                // You can use these values as needed.
+                            }
+                            else
+                            {
+                                // Handle the case where the split didn't produce two parts.
+                                // TODO: Handle error here
+                            }
+
+                            // process report
+                            switch (objectClass)
+                            {
+                                case "user":
+                                    switch (accountControl)
+                                    {
+                                        case "--disabled":
+                                            SearchAD.FindAllDisabledADUsers(rootDN: domainPath, filePath: exportFilePath);
+                                            break;
+                                        case "--enabled":
+                                            break;
+                                        default:
+                                            //TODO: incorrect args[2]
+                                            break;
+                                    }
+                                    break;
+                                case "computer":
+                                    break;
+                                default:
+                                    //TODO: Report incorrect object class filter
+                                    break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error: {ex}");
+                        }
+                    }
                     break;
                 default:
                     Console.WriteLine("Invalid command");

@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="System.DirectoryServices" Version="7.0.1" />
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.1" />
+    <PackageReference Include="EPPlus" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
