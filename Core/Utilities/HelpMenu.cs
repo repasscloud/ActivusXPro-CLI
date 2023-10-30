@@ -9,11 +9,11 @@
             Console.WriteLine();
             Console.WriteLine("Available commands:");
             Console.WriteLine(" --search\tSearch for User or Computer object");
-            Console.WriteLine(" --new\tCreate a new User or Computer object");
+            Console.WriteLine(" --new\t\tCreate a new User or Computer object");
             Console.WriteLine(" --update\tUpdate an existing User or Computer.");
             Console.WriteLine();
             Console.WriteLine("Available target types:");
-            Console.WriteLine(" --user\tTarget a User object");
+            Console.WriteLine(" --user\t\tTarget a User object");
             Console.WriteLine(" --computer\tTarget a Computer object");
             Console.WriteLine();
             Console.WriteLine("Additional help menu available using \"/?\"");
