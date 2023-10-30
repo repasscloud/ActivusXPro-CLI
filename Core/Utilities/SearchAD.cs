@@ -10,7 +10,7 @@ namespace ActivusXPro_CLI.Core.Utilities
             // set the adProperty we will search by
             string adProperty = string.Empty;
 
-            switch (searchBy.ToLower())
+            switch (searchBy)
             {
                 case "s":
                     adProperty = "sAMAccountName";
@@ -43,7 +43,9 @@ namespace ActivusXPro_CLI.Core.Utilities
 
 			using (DirectorySearcher searcher = new DirectorySearcher(new DirectoryEntry(rootDN)))
 			{
-				searcher.Filter = $"(&(objectClass=user)({adProperty}={searchValue}))";
+                Console.WriteLine($"Searching by: (&(objectClass=user)({adProperty}={searchValue}))");
+
+                searcher.Filter = $"(&(objectClass=user)({adProperty}={searchValue}))";
 
                 SearchResult? result = searcher.FindOne();
 
