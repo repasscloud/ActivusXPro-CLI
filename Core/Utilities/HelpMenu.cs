@@ -35,8 +35,10 @@
             Console.WriteLine(" cn\tCountry");
             Console.WriteLine(" dn\tDistinguishedName");
             Console.WriteLine();
-            Console.WriteLine("Example:");
+            Console.WriteLine("Example 1:");
             Console.WriteLine(" actxpro.exe --search --user upn simple.simon@ourdomain.com");
+            Console.WriteLine("Example 2:");
+            Console.WriteLine(" actxpro.exe --search --user s simple.s*");
         }
 	}
 }
