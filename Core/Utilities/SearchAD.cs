@@ -37,9 +37,10 @@ namespace ActivusXPro_CLI.Core.Utilities
                     adProperty = "distinguishedName";
                     break;
                 default:
-                    break;
-
+                    HelpMenu.SearchADUserHelp();
+                    return;
             }
+
 			using (DirectorySearcher searcher = new DirectorySearcher(new DirectoryEntry(rootDN)))
 			{
 				searcher.Filter = $"(&(objectClass=user)({adProperty}={searchValue}))";
