@@ -37,15 +37,19 @@ namespace ActivusXPro_CLI
                         switch (additionalArg)
                         {
                             case "--user":
-                                if (args.Length >= 3)
+                                if (args.Length >= 4)
                                 {
-                                    string searchValue = args[2];
-                                    SearchAD.FindADUser(rootDN: domainPath, searchBy: "user", searchValue: searchValue);
+                                    string searchADProperty = args[2];
+                                    string searchValue = args[3];
+                                    SearchAD.FindADUser(rootDN: domainPath, searchBy: searchADProperty, searchValue: searchValue);
                                 }
                                 else
                                 {
                                     Console.WriteLine("see help");
                                 }
+                                break;
+                            case "/?":
+                                HelpMenu.SearchADUserHelp();
                                 break;
                             default:
                                 Console.WriteLine("see help");
@@ -54,7 +58,7 @@ namespace ActivusXPro_CLI
                     }
                     else
                     {
-                        Console.WriteLine("Missing additional argument after --search.");
+                        HelpMenu.SearchADUserHelp();
                     }
                     break;
                 case "--new":

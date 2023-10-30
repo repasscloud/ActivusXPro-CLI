@@ -19,6 +19,25 @@
             Console.WriteLine("Additional help menu available using \"/?\"");
             Console.WriteLine("  eg: actxpro.exe --search --user /?");
         }
+
+        public static void SearchADUserHelp()
+        {
+            Console.WriteLine("ActivusX Pro Tool Help");
+            Console.WriteLine("Usage: actxpro.exe --search --user <ADProperty> <value>");
+            Console.WriteLine();
+            Console.WriteLine("ADProperty options:");
+            Console.WriteLine(" s\tSamAccountName");
+            Console.WriteLine(" upn\tUserPrincipalName");
+            Console.WriteLine(" gn\tGivenName");
+            Console.WriteLine(" sn\tSurname");
+            Console.WriteLine(" mail\tEmail Address");
+            Console.WriteLine(" empid\tEmployee ID");
+            Console.WriteLine(" cn\tCountry");
+            Console.WriteLine(" dn\tDistinguishedName");
+            Console.WriteLine();
+            Console.WriteLine("Example:");
+            Console.WriteLine(" actxpro.exe --search --user upn simple.simon@ourdomain.com");
+        }
 	}
 }
 
