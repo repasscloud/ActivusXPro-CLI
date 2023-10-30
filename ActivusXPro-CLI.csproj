@@ -13,4 +13,16 @@
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Core\" />
+    <None Remove="Core\Utilities\" />
+    <None Remove="Core\Models\" />
+    <None Remove="Core\Models\User\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="Core\Utilities\" />
+    <Folder Include="Core\Models\" />
+    <Folder Include="Core\Models\User\" />
+  </ItemGroup>
 </Project>
