@@ -1,4 +1,4 @@
-name: .NET
+name: .NET Windows
 
 on:
   push:
@@ -28,6 +28,9 @@ jobs:
 
     - name: Build
       run: dotnet build --no-restore
+
+    - name: Publish Self-Contained
+      run: dotnet publish -r win-x64 -c Release --self-contained true -p:PublishSingleFile=true
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
