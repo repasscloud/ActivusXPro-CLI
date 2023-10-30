@@ -142,6 +142,8 @@ namespace ActivusXPro_CLI.Core.Utilities
                         worksheet.Cells["I1"].Value = "title";
                         worksheet.Cells["J1"].Value = "telephoneNumber";
                         worksheet.Cells["K1"].Value = "Country";
+                        worksheet.Cells["L1"].Value = "wWWHomePage";
+                        worksheet.Cells["M1"].Value = "distinguishedName";
 
                         // add data from the result collection
                         for (int i = 0; i < results.Count; i++)
@@ -160,6 +162,8 @@ namespace ActivusXPro_CLI.Core.Utilities
                             worksheet.Cells["I" + row].Value = result.Properties.Contains("title") ? result.Properties["title"][0].ToString() : null;
                             worksheet.Cells["J" + row].Value = result.Properties.Contains("telephoneNumber") ? result.Properties["telephoneNumber"][0].ToString() : null;
                             worksheet.Cells["K" + row].Value = result.Properties.Contains("co") ? result.Properties["co"][0].ToString() : null;
+                            worksheet.Cells["L" + row].Value = result.Properties.Contains("wWWHomePage") ? result.Properties["wWWHomePage"][0].ToString() : null;
+                            worksheet.Cells["M" + row].Value = result.Properties["distinguishedName"][0].ToString()!;
                         }
 
                         // save the package to the specified file path
