@@ -48,7 +48,7 @@ namespace ActivusXPro_CLI
                                     additionalUserNewArgs.Add(args[i]);
                                 }
                                 // pass them to the new user function
-                                NewAD.ADUser(cliArgs: additionalUserNewArgs, orgUnit: $"LDAP://CN=Users,{domainDN}");
+                                NewAD.ADUser(cliArgs: additionalUserNewArgs, orgUnit: "LDAP://CN=Users,", orgDN: domainDN);
                                 break;
                             case "update":
                                 break;

@@ -6,7 +6,7 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
 {
 	public class NewAD
 	{
-        public static void ADUser(List<string> cliArgs, string orgUnit)
+        public static void ADUser(List<string> cliArgs, string orgUnit, string orgDN)
 		{
 			bool containsObjectName = cliArgs.Any(arg => arg.ToLower().StartsWith("on:"));
 			bool containsSamAccountName = cliArgs.Any(arg => arg.ToLower().StartsWith("sam:"));
@@ -94,7 +94,7 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                     }
                 }
 
-                string containerPath = $"LDAP://{newADUserOrgUnit}";
+                string containerPath = $"LDAP://{orgDN}";
 
                 // create DirectoryEntry for the container
                 DirectoryEntry container = new DirectoryEntry(containerPath);
