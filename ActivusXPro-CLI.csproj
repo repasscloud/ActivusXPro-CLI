@@ -20,11 +20,13 @@
     <None Remove="Core\Utilities\" />
     <None Remove="Core\Models\" />
     <None Remove="Core\Models\User\" />
+    <None Remove="Core\Utilities\UserGroup\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Core\Utilities\" />
     <Folder Include="Core\Models\" />
     <Folder Include="Core\Models\User\" />
+    <Folder Include="Core\Utilities\UserGroup\" />
   </ItemGroup>
 </Project>

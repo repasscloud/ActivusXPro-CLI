@@ -2,6 +2,7 @@
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
 using ActivusXPro_CLI.Core.Utilities;
+using ActivusXPro_CLI.Core.Utilities.UserGroup;
 using OfficeOpenXml;
 
 namespace ActivusXPro_CLI
@@ -28,111 +29,146 @@ namespace ActivusXPro_CLI
             // DN of domain
             string domainDN = currentDomain.GetDirectoryEntry().Properties["distinguishedName"].Value!.ToString()!;
 
-            // select the command
-            string commandSelect = args[0].ToLower();
+            // select the runtimeCommand
+            string runtimeCommand = args[0].ToLower();
 
-            switch (commandSelect)
+            switch (runtimeCommand)
             {
-                case "--search":
-                    // check if there are additional args
-                    if (args.Length == 4)
+                #region User Runtime Commands
+                case "user":
+                    if (args.Length >= 2)
                     {
-                        string additionalArg = args[1].ToLower();
-                        string searchADProperty = args[2].ToLower();
-                        string searchValue = args[3].ToLower();
-
-                        switch (additionalArg)
+                        switch (args[1].ToLower())
                         {
-                            case "/?":
-                                HelpMenu.SearchADUserHelp();
+                            case "new":
+                                // grab the additional arguments into a List<string>
+                                List<string> additionalUserNewArgs = new List<string>();
+                                for (int i = 2; i < args.Length; i++)
+                                {
+                                    additionalUserNewArgs.Add(args[i]);
+                                }
+                                // pass them to the new user function
+                                NewAD.ADUser(cliArgs: additionalUserNewArgs, orgUnit: $"LDAP://CN=Users,{domainDN}");
                                 break;
-                            case "--user":
-                                SearchAD.FindADUser(rootDN: domainPath, searchBy: searchADProperty, searchValue: searchValue);
+                            case "update":
+                                break;
+                            case "delete":
+                                break;
+                            case "-h":
+                            case "--help":
                                 break;
                             default:
-                                HelpMenu.SearchADUserHelp();
+                                //TODO Invalid "user" runtime args[1] message
                                 break;
                         }
                     }
                     else
                     {
-                        HelpMenu.SearchADUserHelp();
+                        //TODO show the user runtime help menu
                     }
                     break;
-                case "--new":
-                    break;
-                case "--update":
-                    break;
-                case "--report":
-                    // actxpro.exe --report --class:<user|computer> --<disabled|enabled> [--file:<xlsx|csv>]
-                    if (args.Length == 4)
-                    {
-                        try
-                        {
-                            // assign all the raw args parsed
-                            string[] objectClassParts = args[1].ToLower().Split(':');
-                            string accountControl = args[2].ToLower();
-                            string[] exportFileTypeParts = args[3].Split(new char[] { ':' }, 2);
+                #endregion
 
-                            // set the split results to empty strings
-                            string objectClass = string.Empty;
-                            string exportFilePath = string.Empty;
+                //case "--search":
+                //    // check if there are additional args
+                //    if (args.Length == 4)
+                //    {
+                //        string additionalArg = args[1].ToLower();
+                //        string searchADProperty = args[2].ToLower();
+                //        string searchValue = args[3].ToLower();
 
-                            // split the parts to the split results
-                            if (objectClassParts.Length == 2)
-                            {
-                                objectClass = objectClassParts[1];
-                            }
-                            else
-                            {
-                                //TODO: handle error here
-                            }
-                            if (exportFileTypeParts.Length == 2)
-                            {
-                                //string argumentName = exportFileTypeParts[0];
-                                exportFilePath = exportFileTypeParts[1];
+                //        switch (additionalArg)
+                //        {
+                //            case "/?":
+                //                HelpMenu.SearchADUserHelp();
+                //                break;
+                //            case "--user":
+                //                SearchAD.FindADUser(rootDN: domainPath, searchBy: searchADProperty, searchValue: searchValue);
+                //                break;
+                //            default:
+                //                HelpMenu.SearchADUserHelp();
+                //                break;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        HelpMenu.SearchADUserHelp();
+                //    }
+                //    break;
+                //case "--new":
+                //    break;
+                //case "--update":
+                //    break;
+                //case "--report":
+                //    // actxpro.exe --report --class:<user|computer> --<disabled|enabled> [--file:<xlsx|csv>]
+                //    if (args.Length == 4)
+                //    {
+                //        try
+                //        {
+                //            // assign all the raw args parsed
+                //            string[] objectClassParts = args[1].ToLower().Split(':');
+                //            string accountControl = args[2].ToLower();
+                //            string[] exportFileTypeParts = args[3].Split(new char[] { ':' }, 2);
 
-                                // Now, argumentName contains "--file" and argumentValue contains "C:\temp\export.xlsx"
-                                // You can use these values as needed.
-                            }
-                            else
-                            {
-                                // Handle the case where the split didn't produce two parts.
-                                // TODO: Handle error here
-                            }
+                //            // set the split results to empty strings
+                //            string objectClass = string.Empty;
+                //            string exportFilePath = string.Empty;
 
-                            // process report
-                            switch (objectClass)
-                            {
-                                case "user":
-                                    switch (accountControl)
-                                    {
-                                        case "--disabled":
-                                            SearchAD.FindAllDisabledADUsers(rootDN: domainPath, filePath: exportFilePath);
-                                            break;
-                                        case "--enabled":
-                                            break;
-                                        default:
-                                            //TODO: incorrect args[2]
-                                            break;
-                                    }
-                                    break;
-                                case "computer":
-                                    break;
-                                default:
-                                    //TODO: Report incorrect object class filter
-                                    break;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex}");
-                        }
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Invalid command");
-                    break;
+                //            // split the parts to the split results
+                //            if (objectClassParts.Length == 2)
+                //            {
+                //                objectClass = objectClassParts[1];
+                //            }
+                //            else
+                //            {
+                //                //TODO: handle error here
+                //            }
+                //            if (exportFileTypeParts.Length == 2)
+                //            {
+                //                //string argumentName = exportFileTypeParts[0];
+                //                exportFilePath = exportFileTypeParts[1];
+
+                //                // Now, argumentName contains "--file" and argumentValue contains "C:\temp\export.xlsx"
+                //                // You can use these values as needed.
+                //            }
+                //            else
+                //            {
+                //                // Handle the case where the split didn't produce two parts.
+                //                // TODO: Handle error here
+                //            }
+
+                //            // process report
+                //            switch (objectClass)
+                //            {
+                //                case "user":
+                //                    switch (accountControl)
+                //                    {
+                //                        case "--disabled":
+                //                            SearchAD.FindAllDisabledADUsers(rootDN: domainPath, filePath: exportFilePath);
+                //                            break;
+                //                        case "--enabled":
+                //                            break;
+                //                        default:
+                //                            //TODO: incorrect args[2]
+                //                            break;
+                //                    }
+                //                    break;
+                //                case "computer":
+                //                    break;
+                //                default:
+                //                    //TODO: Report incorrect object class filter
+                //                    break;
+                //            }
+                //        }
+                //        catch (Exception ex)
+                //        {
+                //            Console.WriteLine($"Error: {ex}");
+                //        }
+                //    }
+                //    break;
+                //default:
+                //    Console.WriteLine("Invalid command");
+                //    break;
             }
         }
     }

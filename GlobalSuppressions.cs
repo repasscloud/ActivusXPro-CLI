@@ -5,12 +5,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
+[assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.UserGroup.NewAD.ADUser(System.Collections.Generic.List{System.String},System.String)")]
 [assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Program.Main(System.String[])")]
-[assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindADUser(System.String,System.String,System.String)")]
-[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindADUserByValue(System.String,System.String,System.String)")]
-[assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindADUserByValue(System.String,System.String,System.String)")]
-[assembly: SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindAllEnabledADUsers(System.String)")]
-[assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindAllDisabledADUsers(System.String)")]
-[assembly: SuppressMessage("Style", "IDE0063:Use simple 'using' statement", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindAllEnabledADUsers(System.String)")]
-[assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindAllEnabledADUsers(System.String)")]
-[assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>", Scope = "member", Target = "~M:ActivusXPro_CLI.Core.Utilities.SearchAD.FindAllDisabledADUsers(System.String,System.String)")]

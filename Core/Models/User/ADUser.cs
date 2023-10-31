@@ -3,6 +3,7 @@
     public class ADUser
     {
         public string SamAccountName { get; set; } = null!;
+        public string ObjectName { get; set; } = null!;
         public string? UserPrincipalName { get; set; }
         public string? GivenName { get; set; }
         public string? Surname { get; set; }
