@@ -97,13 +97,13 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 // set the user attributes
                 newUser.Properties["givenName"].Value = adUser.GivenName ?? null;
                 newUser.Properties["sn"].Value = adUser.Surname ?? null;
-                newUser.Properties["displayName"].Value = adUser.DisplayName ?? null;
-                newUser.Properties["mail"].Value = adUser.Email ?? null;
+                //newUser.Properties["displayName"].Value = adUser.DisplayName ?? null;
+                //newUser.Properties["mail"].Value = adUser.Email ?? null;
                 newUser.Properties["employeeNumber"].Value = adUser.EmployeeID ?? null;
-                newUser.Properties["department"].Value = adUser.Department ?? null;
-                newUser.Properties["title"].Value = adUser.Title ?? null;
-                newUser.Properties["telephoneNumber"].Value = adUser.PhoneNumber ?? null;
-                newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage ?? null;
+                //newUser.Properties["department"].Value = adUser.Department ?? null;
+                //newUser.Properties["title"].Value = adUser.Title ?? null;
+                //newUser.Properties["telephoneNumber"].Value = adUser.PhoneNumber ?? null;
+                //newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage ?? null;
 
                 // if userPrincipalName is not null, set it now
                 if (!string.IsNullOrEmpty(adUser.UserPrincipalName))
