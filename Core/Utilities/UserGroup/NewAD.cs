@@ -6,7 +6,7 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
 {
 	public class NewAD
 	{
-        public static void ADUser(List<string> cliArgs, string orgUnit, string orgDN)
+        public static void ADUser(List<string> cliArgs, string userCN)
 		{
 			bool containsObjectName = cliArgs.Any(arg => arg.ToLower().StartsWith("on:"));
 			bool containsSamAccountName = cliArgs.Any(arg => arg.ToLower().StartsWith("sam:"));
@@ -15,9 +15,8 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
 			{
                 // create new ADUser object
                 ADUser adUser = new();
-
-                // set the OrgUnit for user (unless specified)
-                string newADUserOrgUnit = orgUnit;
+                adUser.AccountEnabled = false;
+                adUser.PasswordNeverExpires = false;
 
                 foreach (string item in cliArgs)
                 {
@@ -68,23 +67,15 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                                 {
                                     adUser.AccountEnabled = true;
                                 }
-                                else
-                                {
-                                    adUser.AccountEnabled = false;
-                                }
                                 break;
                             case "pne":
                                 if (value == "true")
                                 {
                                     adUser.PasswordNeverExpires = true;
                                 }
-                                else
-                                {
-                                    adUser.PasswordNeverExpires = false;
-                                }
                                 break;
                             case "ou":
-                                newADUserOrgUnit = value;
+                                userCN = value;
                                 break;
                         }
                     }
@@ -94,17 +85,16 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                     }
                 }
 
-                string containerPath = $"LDAP://{orgDN}";
-
                 // create DirectoryEntry for the container
-                DirectoryEntry container = new DirectoryEntry(containerPath);
+                DirectoryEntry container = new DirectoryEntry(userCN);
 
                 // create DirectoryEntry for the new user
                 DirectoryEntry newUser = container.Children.Add($"CN={adUser.ObjectName}", "user");
 
-                // set the user attributes
+                // set the sAMAccountName attribute (required)
                 newUser.Properties["sAMAccountName"].Value = adUser.SamAccountName;
-                newUser.Properties["userPrincipalName"].Value = adUser.UserPrincipalName ?? string.Empty;
+
+                // set the user attributes
                 newUser.Properties["givenName"].Value = adUser.GivenName ?? string.Empty;
                 newUser.Properties["sn"].Value = adUser.Surname ?? string.Empty;
                 newUser.Properties["displayName"].Value = adUser.DisplayName ?? string.Empty;
@@ -114,6 +104,12 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 newUser.Properties["title"].Value = adUser.Title ?? string.Empty;
                 newUser.Properties["telephoneNumber"].Value = adUser.PhoneNumber ?? string.Empty;
                 newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage ?? string.Empty;
+
+                // if userPrincipalName is not null, set it now
+                if (!string.IsNullOrEmpty(adUser.UserPrincipalName))
+                {
+                    newUser.Properties["userPrincipalName"].Value = adUser.UserPrincipalName;
+                }
 
                 // save the user
                 newUser.CommitChanges();

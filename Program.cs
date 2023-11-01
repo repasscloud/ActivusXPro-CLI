@@ -1,6 +1,6 @@
-﻿using System.DirectoryServices;
-using System.DirectoryServices.AccountManagement;
-using System.DirectoryServices.ActiveDirectory;
+﻿using System.DirectoryServices.ActiveDirectory;
+using System.Text.Json;
+using ActivusXPro_CLI.Core.Models.ActivusX.Settings;
 using ActivusXPro_CLI.Core.Utilities;
 using ActivusXPro_CLI.Core.Utilities.UserGroup;
 using OfficeOpenXml;
@@ -9,26 +9,74 @@ namespace ActivusXPro_CLI
 {
     internal class Program
     {
+        // declare global variables
+        static string? distinguishedName = null;
+        static string? defaultUsersContainer = null;
+        static JSettings.DCConfig? jConfig = null;
+
         static void Main(string[] args)
         {
+            #region Start count args
             if (args.Length == 0)
             {
                 HelpMenu.MainHelp();
                 return;
             }
+            #endregion
 
+            #region EPPlus License
             // EPPlus License
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            #endregion
 
-            // get the current domain context
-            Domain currentDomain = Domain.GetCurrentDomain();
+            #region ActivusX Json Settings
+            // set ActivusX Json Settings file
+            string jsonConfigFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Data/activusx-settings.json");
 
-            // get the LDAP path for the current domain
-            string domainPath = $"LDAP://{currentDomain.Name}";
+            // try to load the jsonConfig (if found)
+            if (File.Exists(jsonConfigFilePath))
+            {
+                try
+                {
+                    string jsonContent = File.ReadAllText(jsonConfigFilePath);
 
-            // DN of domain
-            string domainDN = currentDomain.GetDirectoryEntry().Properties["distinguishedName"].Value!.ToString()!;
+                    // deserialize the jsonContent
+                    jConfig = JsonSerializer.Deserialize<JSettings.DCConfig>(jsonContent)!;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Unable to deserialize 'Data/activusx-settings.json'");
+                    Console.WriteLine($"Error: {ex}");
+                }
+            }
+            #endregion
 
+            #region Set global variables
+            // set global variables
+            try
+            {
+                // get the current domain context
+                Domain currentDomain = Domain.GetCurrentDomain();
+
+                // distinguishedName of the domain
+                if (jConfig != null)
+                {
+                    distinguishedName = jConfig?.DC?.DistinguishedName ?? currentDomain.GetDirectoryEntry().Properties["distinguishedName"].Value!.ToString();
+                    defaultUsersContainer = $"LDAP://{jConfig?.DC?.DefaultUsersCN ?? "CN=Users,"}{distinguishedName}";
+                }
+                else
+                {
+                    distinguishedName = currentDomain.GetDirectoryEntry().Properties["distinguishedName"].Value!.ToString();
+                    defaultUsersContainer = $"LDAP://CN=Users,{distinguishedName}";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex}");
+            }
+            #endregion
+
+            #region Start the main
             // select the runtimeCommand
             string runtimeCommand = args[0].ToLower();
 
@@ -48,7 +96,7 @@ namespace ActivusXPro_CLI
                                     additionalUserNewArgs.Add(args[i]);
                                 }
                                 // pass them to the new user function
-                                NewAD.ADUser(cliArgs: additionalUserNewArgs, orgUnit: "LDAP://CN=Users,", orgDN: domainDN);
+                                NewAD.ADUser(cliArgs: additionalUserNewArgs, userCN: defaultUsersContainer!);
                                 break;
                             case "update":
                                 break;
@@ -170,6 +218,7 @@ namespace ActivusXPro_CLI
                 //    Console.WriteLine("Invalid command");
                 //    break;
             }
+            #endregion
         }
     }
 }

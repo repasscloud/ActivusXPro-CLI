@@ -16,11 +16,20 @@
   </ItemGroup>
 
   <ItemGroup>
+      <None Update="Data\activusx-settings.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Core\" />
     <None Remove="Core\Utilities\" />
     <None Remove="Core\Models\" />
     <None Remove="Core\Models\User\" />
     <None Remove="Core\Utilities\UserGroup\" />
+    <None Remove="Data\" />
+    <None Remove="Core\Models\ActivusX\" />
+    <None Remove="Core\Models\ActivusX\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
@@ -28,5 +37,8 @@
     <Folder Include="Core\Models\" />
     <Folder Include="Core\Models\User\" />
     <Folder Include="Core\Utilities\UserGroup\" />
+    <Folder Include="Data\" />
+    <Folder Include="Core\Models\ActivusX\" />
+    <Folder Include="Core\Models\ActivusX\Settings\" />
   </ItemGroup>
 </Project>
