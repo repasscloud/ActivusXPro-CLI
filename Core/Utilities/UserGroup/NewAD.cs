@@ -99,19 +99,19 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                     newUser.Properties["givenName"].Value = adUser.GivenName;
                 if (!string.IsNullOrEmpty(adUser.Surname))
                     newUser.Properties["sn"].Value = adUser.Surname;
-                if (!string.IsNullOrEmpty(adUser.Surname))
+                if (!string.IsNullOrEmpty(adUser.DisplayName))
                     newUser.Properties["displayName"].Value = adUser.DisplayName;
-                if (!string.IsNullOrEmpty(adUser.Surname))
+                if (!string.IsNullOrEmpty(adUser.Email))
                     newUser.Properties["mail"].Value = adUser.Email;
-                if (!string.IsNullOrEmpty(adUser.Surname))
+                if (!string.IsNullOrEmpty(adUser.EmployeeID))
                     newUser.Properties["employeeNumber"].Value = adUser.EmployeeID;
-                if (!string.IsNullOrEmpty(adUser.Surname))
+                if (!string.IsNullOrEmpty(adUser.Department))
                     newUser.Properties["department"].Value = adUser.Department;
-                if (!string.IsNullOrEmpty(adUser.Surname))
+                if (!string.IsNullOrEmpty(adUser.Title))
                     newUser.Properties["title"].Value = adUser.Title;
-                if (!string.IsNullOrEmpty(adUser.Surname))
+                if (!string.IsNullOrEmpty(adUser.PhoneNumber))
                     newUser.Properties["telephoneNumber"].Value = adUser.PhoneNumber;
-                if (!string.IsNullOrEmpty(adUser.Surname))
+                if (!string.IsNullOrEmpty(adUser.WwwHomePage))
                     newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage;
 
                 // if userPrincipalName is not null, set it now
