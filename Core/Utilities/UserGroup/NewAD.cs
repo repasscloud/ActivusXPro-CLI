@@ -118,6 +118,13 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 if (!string.IsNullOrEmpty(adUser.UserPrincipalName))
                     newUser.Properties["userPrincipalName"].Value = adUser.UserPrincipalName;
 
+                // set proxyAddresses
+                if (adUser.ProxyAddresses != null && adUser.ProxyAddresses.Count > 0)
+                {
+                    newUser.Properties["proxyAddresses"].Value = adUser.ProxyAddresses[0];
+                }
+
+
                 // save the user
                 newUser.CommitChanges();
 
