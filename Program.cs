@@ -31,7 +31,9 @@ namespace ActivusXPro_CLI
 
             #region ActivusX Json Settings
             // set ActivusX Json Settings file
-            string jsonConfigFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Data/activusx-settings.json");
+            //string jsonConfigFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Data/activusx-settings.json");
+            string jsonConfigFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "activusx-settings.json");
+
 
             // try to load the jsonConfig (if found)
             if (File.Exists(jsonConfigFilePath))
