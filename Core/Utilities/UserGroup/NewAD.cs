@@ -1,6 +1,7 @@
 ﻿using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using ActivusXPro_CLI.Core.Models.User;
+using ActivusXPro_CLI.Core.Utilities.Security;
 
 namespace ActivusXPro_CLI.Core.Utilities.UserGroup
 {
@@ -10,6 +11,7 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
         {
             bool containsObjectName = cliArgs.Any(arg => arg.ToLower().StartsWith("on:"));
             bool containsSamAccountName = cliArgs.Any(arg => arg.ToLower().StartsWith("sam:"));
+            bool setRandomPassword = false;
 
             if (containsObjectName && containsSamAccountName)
             {
@@ -78,6 +80,12 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                                 if (value == "true")
                                 {
                                     adUser.PasswordNeverExpires = true;
+                                }
+                                break;
+                            case "password":
+                                if (value == "true")
+                                {
+                                    setRandomPassword = true;
                                 }
                                 break;
                             case "ou":
@@ -150,6 +158,12 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                         if (user != null)
                         {
                             user.Enabled = true;
+
+                            // set random password?
+                            if (setRandomPassword)
+                            {
+                                user.SetPassword(newPassword: PasswordGenerator.GenerateRandomPassword(length: 20));
+                            }
 
                             // password never expires?
                             if (adUser.PasswordNeverExpires)
