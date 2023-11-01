@@ -95,15 +95,15 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 newUser.Properties["sAMAccountName"].Value = adUser.SamAccountName;
 
                 // set the user attributes
-                newUser.Properties["givenName"].Value = adUser.GivenName ?? string.Empty;
-                newUser.Properties["sn"].Value = adUser.Surname ?? string.Empty;
-                newUser.Properties["displayName"].Value = adUser.DisplayName ?? string.Empty;
-                newUser.Properties["mail"].Value = adUser.Email ?? string.Empty;
-                newUser.Properties["employeeNumber"].Value = adUser.EmployeeID ?? string.Empty;
-                newUser.Properties["department"].Value = adUser.Department ?? string.Empty;
-                newUser.Properties["title"].Value = adUser.Title ?? string.Empty;
-                newUser.Properties["telephoneNumber"].Value = adUser.PhoneNumber ?? string.Empty;
-                newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage ?? string.Empty;
+                newUser.Properties["givenName"].Value = adUser.GivenName ?? null;
+                newUser.Properties["sn"].Value = adUser.Surname ?? null;
+                newUser.Properties["displayName"].Value = adUser.DisplayName ?? null;
+                newUser.Properties["mail"].Value = adUser.Email ?? null;
+                newUser.Properties["employeeNumber"].Value = adUser.EmployeeID ?? null;
+                newUser.Properties["department"].Value = adUser.Department ?? null;
+                newUser.Properties["title"].Value = adUser.Title ?? null;
+                newUser.Properties["telephoneNumber"].Value = adUser.PhoneNumber ?? null;
+                newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage ?? null;
 
                 // if userPrincipalName is not null, set it now
                 if (!string.IsNullOrEmpty(adUser.UserPrincipalName))
