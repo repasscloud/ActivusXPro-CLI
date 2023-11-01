@@ -14,6 +14,7 @@
         public string? EmployeeID { get; set; }
         public string? Title { get; set; }
         public string? PhoneNumber { get; set; }
+        public string? PhysicalDeliveryOfficeName { get; set; }
         public string? WwwHomePage { get; set; }
         public bool AccountEnabled { get; set; } = false;
         public bool PasswordNeverExpires { get; set; } = false;

@@ -62,6 +62,9 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                             case "ph":
                                 adUser.PhoneNumber = value;
                                 break;
+                            case "podn":
+                                adUser.PhysicalDeliveryOfficeName = value;
+                                break;
                             case "www":
                                 adUser.WwwHomePage = value;
                                 break;
@@ -108,10 +111,12 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                     newUser.Properties["description"].Value = adUser.Descripition;
                 if (!string.IsNullOrEmpty(adUser.DisplayName))
                     newUser.Properties["displayName"].Value = adUser.DisplayName;
-                if (!string.IsNullOrEmpty(adUser.Email))
-                    newUser.Properties["mail"].Value = adUser.Email;
                 if (!string.IsNullOrEmpty(adUser.EmployeeID))
                     newUser.Properties["employeeNumber"].Value = adUser.EmployeeID;
+                if (!string.IsNullOrEmpty(adUser.Email))
+                    newUser.Properties["mail"].Value = adUser.Email;
+                if (!string.IsNullOrEmpty(adUser.PhysicalDeliveryOfficeName))
+                    newUser.Properties["physicalDeliveryOfficeName"].Value = adUser.PhysicalDeliveryOfficeName;
                 if (!string.IsNullOrEmpty(adUser.Title))
                     newUser.Properties["title"].Value = adUser.Title;
                 if (!string.IsNullOrEmpty(adUser.PhoneNumber))
