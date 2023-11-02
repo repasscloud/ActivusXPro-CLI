@@ -217,12 +217,12 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                         }
 
                         // Remote Desktop profilePath
-                        if (!string.IsNullOrEmpty(adUser.ProfilePath))
-                        {
-                            DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
-                            userEntry.Properties["TerminalServicesProfilePath"].Value = adUser.ProfilePath;
-                            userEntry.CommitChanges();
-                        }
+                        //if (!string.IsNullOrEmpty(adUser.ProfilePath))
+                        //{
+                        //    DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                        //    userEntry.Properties["TerminalServicesProfilePath"].Value = adUser.ProfilePath;
+                        //    userEntry.CommitChanges();
+                        //}
 
                         // save the user object
                         user.Save();
