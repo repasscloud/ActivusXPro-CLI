@@ -33,6 +33,9 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                             case "c":
                                 adUser.Country = value;
                                 break;
+                            case "co":
+                                adUser.Company = value;
+                                break;
                             case "cy":
                                 adUser.City = value;
                                 break;
@@ -110,6 +113,9 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                             case "ou":
                                 userCN = value;
                                 break;
+                            case "pp":
+                                adUser.ProfilePath = value;
+                                break;
                         }
                     }
                     else if (parts.Length == 1)
@@ -132,6 +138,8 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                     newUser.Properties["givenName"].Value = adUser.GivenName;
                 if (!string.IsNullOrEmpty(adUser.Surname))
                     newUser.Properties["sn"].Value = adUser.Surname;
+                if (!string.IsNullOrEmpty(adUser.Company))
+                    newUser.Properties["company"].Value = adUser.Company;
                 if (!string.IsNullOrEmpty(adUser.Department))
                     newUser.Properties["department"].Value = adUser.Department;
                 if (!string.IsNullOrEmpty(adUser.Descripition))
@@ -180,37 +188,47 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 // save the user
                 newUser.CommitChanges();
 
-                // enable user?
-                if (adUser.AccountEnabled)
-                {
-                    // retrieve the user account
-                    using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
-                    {
-                        // search for the user by sAMAccountName
-                        UserPrincipal user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, adUser.SamAccountName.ToString());
 
-                        // enable AD User
-                        if (user != null)
+                // retrieve the user account for PrincipalContext changes
+                using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
+                {
+                    // search for the user by sAMAccountName
+                    UserPrincipal user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, adUser.SamAccountName.ToString());
+
+                    // enable AD User
+                    if (user != null)
+                    {
+                        // enable user?
+                        if (adUser.AccountEnabled)
                         {
                             user.Enabled = true;
 
-                            // set random password?
-                            if (setRandomPassword)
-                            {
-                                user.SetPassword(newPassword: PasswordGenerator.GenerateRandomPassword(length: 20));
-                            }
-
-                            // password never expires?
+                            // password never expires? (only if account is enabled)
                             if (adUser.PasswordNeverExpires)
                             {
                                 user.PasswordNeverExpires = true;
                             }
-
-                            // save the user object
-                            user.Save();
                         }
+
+                        // set random password?
+                        if (setRandomPassword)
+                        {
+                            user.SetPassword(newPassword: PasswordGenerator.GenerateRandomPassword(length: 20));
+                        }
+
+                        // Remote Desktop profilePath
+                        if (!string.IsNullOrEmpty(adUser.ProfilePath))
+                        {
+                            DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                            userEntry.Properties["TerminalServicesProfilePath"].Value = adUser.ProfilePath;
+                            userEntry.CommitChanges();
+                        }
+
+                        // save the user object
+                        user.Save();
                     }
                 }
+                
             }
             else
             {

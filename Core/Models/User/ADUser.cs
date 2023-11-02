@@ -7,6 +7,7 @@
         public string? UserPrincipalName { get; set; }
         public string? GivenName { get; set; }
         public string? Surname { get; set; }
+        public string? Company { get; set; }
         public string? Department { get; set; }
         public string? Descripition { get; set; }
         public string? DisplayName { get; set; }
@@ -27,6 +28,7 @@
         public List<string>? ProxyAddresses { get; set; }
         public string? Country { get; set; }
         public string OrgUnit { get; set; } = null!;
+        public string? ProfilePath { get; set;}
     }
 }
 
