@@ -1,8 +1,6 @@
 name: .NET Windows
 
 on:
-  push:
-    branches: [ "dev-windows" ]
   pull_request:
     branches: [ "dev-windows" ]
 
