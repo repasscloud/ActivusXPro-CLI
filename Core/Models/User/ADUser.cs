@@ -16,6 +16,12 @@
         public string? PhoneNumber { get; set; }
         public string? PhysicalDeliveryOfficeName { get; set; }
         public string? WwwHomePage { get; set; }
+        public string? Description { get; set; }
+        public string? StreetAddress { get; set; }
+        public string? City { get; set; }
+        public string? State { get; set; }
+        public string? PostCode { get; set; }
+        public List<string>? POBox { get; set; }
         public bool AccountEnabled { get; set; } = false;
         public bool PasswordNeverExpires { get; set; } = false;
         public List<string>? ProxyAddresses { get; set; }

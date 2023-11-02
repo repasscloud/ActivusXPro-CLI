@@ -52,10 +52,17 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                             case "on":
                                 adUser.ObjectName = value;
                                 break;
+                            case "pc":
+                            case "zip":
+                                adUser.PostCode = value;
+                                break;
                             case "ph":
                                 adUser.PhoneNumber = value;
                                 break;
-                            case "podn":
+                            case "pobox":
+                                adUser.POBox = new List<string> { value };
+                                break;
+                            case "pdon":
                                 adUser.PhysicalDeliveryOfficeName = value;
                                 break;
                             case "sam":
@@ -63,6 +70,12 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                                 break;
                             case "sn":
                                 adUser.Surname = value;
+                                break;
+                            case "st":
+                                adUser.StreetAddress = value;
+                                break;
+                            case "stt":
+                                adUser.State = value;
                                 break;
                             case "t":
                                 adUser.Title = value;
@@ -116,8 +129,6 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                     newUser.Properties["givenName"].Value = adUser.GivenName;
                 if (!string.IsNullOrEmpty(adUser.Surname))
                     newUser.Properties["sn"].Value = adUser.Surname;
-                if (!string.IsNullOrEmpty(adUser.Country))
-                    newUser.Properties["c"].Value = adUser.Country;
                 if (!string.IsNullOrEmpty(adUser.Department))
                     newUser.Properties["department"].Value = adUser.Department;
                 if (!string.IsNullOrEmpty(adUser.Descripition))
@@ -136,6 +147,20 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                     newUser.Properties["telephoneNumber"].Value = adUser.PhoneNumber;
                 if (!string.IsNullOrEmpty(adUser.WwwHomePage))
                     newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage;
+                if (!string.IsNullOrEmpty(adUser.StreetAddress))
+                    newUser.Properties["streetAddress"].Value = adUser.StreetAddress;
+                if (!string.IsNullOrEmpty(adUser.City))
+                    newUser.Properties["l"].Value = adUser.City;
+                if (!string.IsNullOrEmpty(adUser.State))
+                    newUser.Properties["st"].Value = adUser.State;
+                if (!string.IsNullOrEmpty(adUser.Country))
+                    newUser.Properties["c"].Value = adUser.Country;
+
+                // PO Box
+                if (adUser.POBox != null && adUser.POBox.Count > 0)
+                {
+                    newUser.Properties["postOfficeBox"].Value = adUser.POBox[0];
+                }
 
                 // if userPrincipalName is not null, set it now
                 if (!string.IsNullOrEmpty(adUser.UserPrincipalName))
@@ -146,9 +171,6 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 {
                     newUser.Properties["proxyAddresses"].Value = adUser.ProxyAddresses[0];
                 }
-
-                // set country
-
 
                 // save the user
                 newUser.CommitChanges();
