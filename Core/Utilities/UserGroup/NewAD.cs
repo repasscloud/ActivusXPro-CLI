@@ -33,6 +33,9 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                             case "c":
                                 adUser.Country = value;
                                 break;
+                            case "cy":
+                                adUser.City = value;
+                                break;
                             case "dep":
                                 adUser.Department = value;
                                 break;
@@ -60,7 +63,7 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                                 adUser.PhoneNumber = value;
                                 break;
                             case "pobox":
-                                adUser.POBox = new List<string> { value };
+                                adUser.POBox = new List<string> { $"{value}" };
                                 break;
                             case "pdon":
                                 adUser.PhysicalDeliveryOfficeName = value;
@@ -148,11 +151,13 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 if (!string.IsNullOrEmpty(adUser.WwwHomePage))
                     newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage;
                 if (!string.IsNullOrEmpty(adUser.StreetAddress))
-                    newUser.Properties["streetAddress"].Value = adUser.StreetAddress;
+                    newUser.Properties["streetAddress"].Value = adUser.StreetAddress.Replace("\\n","\n");
                 if (!string.IsNullOrEmpty(adUser.City))
                     newUser.Properties["l"].Value = adUser.City;
                 if (!string.IsNullOrEmpty(adUser.State))
                     newUser.Properties["st"].Value = adUser.State;
+                if (!string.IsNullOrEmpty(adUser.PostCode))
+                    newUser.Properties["l"].Value = adUser.City;
                 if (!string.IsNullOrEmpty(adUser.Country))
                     newUser.Properties["c"].Value = adUser.Country;
 
