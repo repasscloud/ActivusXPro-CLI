@@ -159,7 +159,12 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 if (!string.IsNullOrEmpty(adUser.WwwHomePage))
                     newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage;
                 if (!string.IsNullOrEmpty(adUser.StreetAddress))
-                    newUser.Properties["streetAddress"].Value = adUser.StreetAddress.Replace("\\n", Environment.NewLine);
+                {
+                    string streetAddress = adUser.StreetAddress;
+                    streetAddress = streetAddress.Replace("\\n", Environment.NewLine);
+                    newUser.Properties["streetAddress"].Value = streetAddress;
+                }
+                    //newUser.Properties["streetAddress"].Value = adUser.StreetAddress.Replace("\\n", Environment.NewLine);
                 if (!string.IsNullOrEmpty(adUser.City))
                     newUser.Properties["l"].Value = adUser.City;
                 if (!string.IsNullOrEmpty(adUser.State))
