@@ -157,7 +157,7 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 if (!string.IsNullOrEmpty(adUser.State))
                     newUser.Properties["st"].Value = adUser.State;
                 if (!string.IsNullOrEmpty(adUser.PostCode))
-                    newUser.Properties["l"].Value = adUser.City;
+                    newUser.Properties["postalCode"].Value = adUser.PostCode;
                 if (!string.IsNullOrEmpty(adUser.Country))
                     newUser.Properties["c"].Value = adUser.Country;
 
