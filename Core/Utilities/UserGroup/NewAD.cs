@@ -151,7 +151,7 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 if (!string.IsNullOrEmpty(adUser.WwwHomePage))
                     newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage;
                 if (!string.IsNullOrEmpty(adUser.StreetAddress))
-                    newUser.Properties["streetAddress"].Value = adUser.StreetAddress.Replace("\\n","\n");
+                    newUser.Properties["streetAddress"].Value = adUser.StreetAddress;
                 if (!string.IsNullOrEmpty(adUser.City))
                     newUser.Properties["l"].Value = adUser.City;
                 if (!string.IsNullOrEmpty(adUser.State))
