@@ -30,20 +30,14 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
 
                         switch (key)
                         {
-                            case "on":
-                                adUser.ObjectName = value;
+                            case "c":
+                                adUser.Country = value;
                                 break;
-                            case "sam":
-                                adUser.SamAccountName = value;
+                            case "dep":
+                                adUser.Department = value;
                                 break;
-                            case "upn":
-                                adUser.UserPrincipalName = value;
-                                break;
-                            case "gn":
-                                adUser.GivenName = value;
-                                break;
-                            case "sn":
-                                adUser.Surname = value;
+                            case "desc":
+                                adUser.Descripition = value;
                                 break;
                             case "dn":
                                 adUser.DisplayName = value;
@@ -52,20 +46,29 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                                 adUser.Email = value;
                                 adUser.ProxyAddresses = new List<string> { $"SMTP:{value}" };
                                 break;
-                            case "dep":
-                                adUser.Department = value;
+                            case "gn":
+                                adUser.GivenName = value;
                                 break;
-                            case "desc":
-                                adUser.Descripition = value;
-                                break;
-                            case "t":
-                                adUser.Title = value;
+                            case "on":
+                                adUser.ObjectName = value;
                                 break;
                             case "ph":
                                 adUser.PhoneNumber = value;
                                 break;
                             case "podn":
                                 adUser.PhysicalDeliveryOfficeName = value;
+                                break;
+                            case "sam":
+                                adUser.SamAccountName = value;
+                                break;
+                            case "sn":
+                                adUser.Surname = value;
+                                break;
+                            case "t":
+                                adUser.Title = value;
+                                break;
+                            case "upn":
+                                adUser.UserPrincipalName = value;
                                 break;
                             case "www":
                                 adUser.WwwHomePage = value;
@@ -113,6 +116,8 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                     newUser.Properties["givenName"].Value = adUser.GivenName;
                 if (!string.IsNullOrEmpty(adUser.Surname))
                     newUser.Properties["sn"].Value = adUser.Surname;
+                if (!string.IsNullOrEmpty(adUser.Country))
+                    newUser.Properties["c"].Value = adUser.Country;
                 if (!string.IsNullOrEmpty(adUser.Department))
                     newUser.Properties["department"].Value = adUser.Department;
                 if (!string.IsNullOrEmpty(adUser.Descripition))
@@ -141,6 +146,9 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 {
                     newUser.Properties["proxyAddresses"].Value = adUser.ProxyAddresses[0];
                 }
+
+                // set country
+
 
                 // save the user
                 newUser.CommitChanges();
