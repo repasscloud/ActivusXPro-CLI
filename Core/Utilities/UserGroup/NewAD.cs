@@ -126,7 +126,7 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                 }
 
                 // check if the user exists in AD with the current samaccountname
-                bool exists = IsExistsObject.IsSamAccountNameExists(domainName: "judgejudy.local", samAccountName: adUser.SamAccountName);
+                bool exists = IsExistsObject.IsSamAccountNameExists(distinguishedName: Program.distinguishedName!, samAccountName: adUser.SamAccountName);
 
                 if (!exists)
                 {
