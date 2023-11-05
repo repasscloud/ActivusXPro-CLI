@@ -1,6 +1,7 @@
 ﻿{
   "DC": {
-    "DistinguishedName": "DC=judgejudy,DC=local",
-    "DefaultUsersCN": "CN=Users,"
+    "DomainName":  "judgejudy.local",
+    "DistinguishedName":  "DC=judgejudy,DC=local",
+    "DefaultUsersCN":  "CN=Users,"
   }
 }
