@@ -30,6 +30,7 @@
     <None Remove="Core\Models\ActivusX\" />
     <None Remove="Core\Models\ActivusX\Settings\" />
     <None Remove="Core\Utilities\Security\" />
+    <None Remove="Core\Utilities\Helper\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
@@ -40,5 +41,6 @@
     <Folder Include="Core\Models\ActivusX\" />
     <Folder Include="Core\Models\ActivusX\Settings\" />
     <Folder Include="Core\Utilities\Security\" />
+    <Folder Include="Core\Utilities\Helper\" />
   </ItemGroup>
 </Project>

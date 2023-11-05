@@ -1,6 +1,7 @@
 ﻿using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using ActivusXPro_CLI.Core.Models.User;
+using ActivusXPro_CLI.Core.Utilities.Helper;
 using ActivusXPro_CLI.Core.Utilities.Security;
 
 namespace ActivusXPro_CLI.Core.Utilities.UserGroup
@@ -124,111 +125,119 @@ namespace ActivusXPro_CLI.Core.Utilities.UserGroup
                     }
                 }
 
-                // create DirectoryEntry for the container
-                DirectoryEntry container = new DirectoryEntry(userCN);
+                // check if the user exists in AD with the current samaccountname
+                bool exists = IsExistsObject.IsSamAccountNameExists(distinguishedName: Program.distinguishedName!, samAccountName: adUser.SamAccountName);
 
-                // create DirectoryEntry for the new user
-                DirectoryEntry newUser = container.Children.Add($"CN={adUser.ObjectName}", "user");
-
-                // set the sAMAccountName attribute (required)
-                newUser.Properties["sAMAccountName"].Value = adUser.SamAccountName;
-
-                // set the user attributes
-                if (!string.IsNullOrEmpty(adUser.GivenName))
-                    newUser.Properties["givenName"].Value = adUser.GivenName;
-                if (!string.IsNullOrEmpty(adUser.Surname))
-                    newUser.Properties["sn"].Value = adUser.Surname;
-                if (!string.IsNullOrEmpty(adUser.Company))
-                    newUser.Properties["company"].Value = adUser.Company;
-                if (!string.IsNullOrEmpty(adUser.Department))
-                    newUser.Properties["department"].Value = adUser.Department;
-                if (!string.IsNullOrEmpty(adUser.Descripition))
-                    newUser.Properties["description"].Value = adUser.Descripition;
-                if (!string.IsNullOrEmpty(adUser.DisplayName))
-                    newUser.Properties["displayName"].Value = adUser.DisplayName;
-                if (!string.IsNullOrEmpty(adUser.EmployeeID))
-                    newUser.Properties["employeeNumber"].Value = adUser.EmployeeID;
-                if (!string.IsNullOrEmpty(adUser.Email))
-                    newUser.Properties["mail"].Value = adUser.Email;
-                if (!string.IsNullOrEmpty(adUser.PhysicalDeliveryOfficeName))
-                    newUser.Properties["physicalDeliveryOfficeName"].Value = adUser.PhysicalDeliveryOfficeName;
-                if (!string.IsNullOrEmpty(adUser.Title))
-                    newUser.Properties["title"].Value = adUser.Title;
-                if (!string.IsNullOrEmpty(adUser.PhoneNumber))
-                    newUser.Properties["telephoneNumber"].Value = adUser.PhoneNumber;
-                if (!string.IsNullOrEmpty(adUser.WwwHomePage))
-                    newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage;
-                if (!string.IsNullOrEmpty(adUser.StreetAddress))
-                    newUser.Properties["streetAddress"].Value = adUser.StreetAddress.Replace("\\n", Environment.NewLine);
-                if (!string.IsNullOrEmpty(adUser.City))
-                    newUser.Properties["l"].Value = adUser.City;
-                if (!string.IsNullOrEmpty(adUser.State))
-                    newUser.Properties["st"].Value = adUser.State;
-                if (!string.IsNullOrEmpty(adUser.PostCode))
-                    newUser.Properties["postalCode"].Value = adUser.PostCode;
-                if (!string.IsNullOrEmpty(adUser.Country))
-                    newUser.Properties["c"].Value = adUser.Country;
-
-                // PO Box
-                if (adUser.POBox != null && adUser.POBox.Count > 0)
+                if (!exists)
                 {
-                    newUser.Properties["postOfficeBox"].Value = adUser.POBox[0];
-                }
+                    // create DirectoryEntry for the container
+                    DirectoryEntry container = new DirectoryEntry(userCN);
 
-                // if userPrincipalName is not null, set it now
-                if (!string.IsNullOrEmpty(adUser.UserPrincipalName))
-                    newUser.Properties["userPrincipalName"].Value = adUser.UserPrincipalName;
+                    // create DirectoryEntry for the new user
+                    DirectoryEntry newUser = container.Children.Add($"CN={adUser.ObjectName}", "user");
 
-                // set proxyAddresses
-                if (adUser.ProxyAddresses != null && adUser.ProxyAddresses.Count > 0)
-                {
-                    newUser.Properties["proxyAddresses"].Value = adUser.ProxyAddresses[0];
-                }
+                    // set the sAMAccountName attribute (required)
+                    newUser.Properties["sAMAccountName"].Value = adUser.SamAccountName;
 
-                // save the user
-                newUser.CommitChanges();
+                    // set the user attributes
+                    if (!string.IsNullOrEmpty(adUser.GivenName))
+                        newUser.Properties["givenName"].Value = adUser.GivenName;
+                    if (!string.IsNullOrEmpty(adUser.Surname))
+                        newUser.Properties["sn"].Value = adUser.Surname;
+                    if (!string.IsNullOrEmpty(adUser.Company))
+                        newUser.Properties["company"].Value = adUser.Company;
+                    if (!string.IsNullOrEmpty(adUser.Department))
+                        newUser.Properties["department"].Value = adUser.Department;
+                    if (!string.IsNullOrEmpty(adUser.Descripition))
+                        newUser.Properties["description"].Value = adUser.Descripition;
+                    if (!string.IsNullOrEmpty(adUser.DisplayName))
+                        newUser.Properties["displayName"].Value = adUser.DisplayName;
+                    if (!string.IsNullOrEmpty(adUser.EmployeeID))
+                        newUser.Properties["employeeNumber"].Value = adUser.EmployeeID;
+                    if (!string.IsNullOrEmpty(adUser.Email))
+                        newUser.Properties["mail"].Value = adUser.Email;
+                    if (!string.IsNullOrEmpty(adUser.PhysicalDeliveryOfficeName))
+                        newUser.Properties["physicalDeliveryOfficeName"].Value = adUser.PhysicalDeliveryOfficeName;
+                    if (!string.IsNullOrEmpty(adUser.Title))
+                        newUser.Properties["title"].Value = adUser.Title;
+                    if (!string.IsNullOrEmpty(adUser.PhoneNumber))
+                        newUser.Properties["telephoneNumber"].Value = adUser.PhoneNumber;
+                    if (!string.IsNullOrEmpty(adUser.WwwHomePage))
+                        newUser.Properties["wWWHomePage"].Value = adUser.WwwHomePage;
+                    if (!string.IsNullOrEmpty(adUser.StreetAddress))
+                        newUser.Properties["streetAddress"].Value = adUser.StreetAddress.Replace("\\n", Environment.NewLine);
+                    if (!string.IsNullOrEmpty(adUser.City))
+                        newUser.Properties["l"].Value = adUser.City;
+                    if (!string.IsNullOrEmpty(adUser.State))
+                        newUser.Properties["st"].Value = adUser.State;
+                    if (!string.IsNullOrEmpty(adUser.PostCode))
+                        newUser.Properties["postalCode"].Value = adUser.PostCode;
+                    if (!string.IsNullOrEmpty(adUser.Country))
+                        newUser.Properties["c"].Value = adUser.Country;
 
-
-                // retrieve the user account for PrincipalContext changes
-                using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
-                {
-                    // search for the user by sAMAccountName
-                    UserPrincipal user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, adUser.SamAccountName.ToString());
-
-                    // enable AD User
-                    if (user != null)
+                    // PO Box
+                    if (adUser.POBox != null && adUser.POBox.Count > 0)
                     {
-                        // enable user?
-                        if (adUser.AccountEnabled)
-                        {
-                            user.Enabled = true;
+                        newUser.Properties["postOfficeBox"].Value = adUser.POBox[0];
+                    }
 
-                            // password never expires? (only if account is enabled)
-                            if (adUser.PasswordNeverExpires)
+                    // if userPrincipalName is not null, set it now
+                    if (!string.IsNullOrEmpty(adUser.UserPrincipalName))
+                        newUser.Properties["userPrincipalName"].Value = adUser.UserPrincipalName;
+
+                    // set proxyAddresses
+                    if (adUser.ProxyAddresses != null && adUser.ProxyAddresses.Count > 0)
+                    {
+                        newUser.Properties["proxyAddresses"].Value = adUser.ProxyAddresses[0];
+                    }
+
+                    // save the user
+                    newUser.CommitChanges();
+
+                    // retrieve the user account for PrincipalContext changes
+                    using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
+                    {
+                        // search for the user by sAMAccountName
+                        UserPrincipal user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, adUser.SamAccountName.ToString());
+
+                        // enable AD User
+                        if (user != null)
+                        {
+                            // enable user?
+                            if (adUser.AccountEnabled)
                             {
-                                user.PasswordNeverExpires = true;
+                                user.Enabled = true;
+
+                                // password never expires? (only if account is enabled)
+                                if (adUser.PasswordNeverExpires)
+                                {
+                                    user.PasswordNeverExpires = true;
+                                }
                             }
+
+                            // set random password?
+                            if (setRandomPassword)
+                            {
+                                user.SetPassword(newPassword: PasswordGenerator.GenerateRandomPassword(length: 20));
+                            }
+
+                            // Remote Desktop profilePath
+                            //if (!string.IsNullOrEmpty(adUser.ProfilePath))
+                            //{
+                            //    DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                            //    userEntry.Properties["TerminalServicesProfilePath"].Value = adUser.ProfilePath;
+                            //    userEntry.CommitChanges();
+                            //}
+
+                            // save the user object
+                            user.Save();
                         }
-
-                        // set random password?
-                        if (setRandomPassword)
-                        {
-                            user.SetPassword(newPassword: PasswordGenerator.GenerateRandomPassword(length: 20));
-                        }
-
-                        // Remote Desktop profilePath
-                        //if (!string.IsNullOrEmpty(adUser.ProfilePath))
-                        //{
-                        //    DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
-                        //    userEntry.Properties["TerminalServicesProfilePath"].Value = adUser.ProfilePath;
-                        //    userEntry.CommitChanges();
-                        //}
-
-                        // save the user object
-                        user.Save();
                     }
                 }
-                
+                else
+                {
+                    Console.WriteLine($"User with sAMAccountName {adUser.SamAccountName} already exists");
+                }
             }
             else
             {

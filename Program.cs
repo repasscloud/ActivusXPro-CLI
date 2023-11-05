@@ -10,7 +10,7 @@ namespace ActivusXPro_CLI
     internal class Program
     {
         // declare global variables
-        static string? distinguishedName = null;
+        public static string? distinguishedName = null;
         static string? defaultUsersContainer = null;
         static JSettings.DCConfig? jConfig = null;
 
